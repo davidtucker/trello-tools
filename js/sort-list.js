@@ -11,8 +11,17 @@ var isSorting = false;
 
 var populateListItems = function() {
     return t.lists('name')
-    .then(function(data) {
-        console.dir(data);
+    .then(function(lists) {
+        console.dir(lists);
+        var sel = document.getElementsByName('boardLists');
+        var fragment = document.createDocumentFragment();
+        lists.forEach(function(list, index) {
+            var opt = document.createElement('option');
+            opt.innerHTML = list.name;
+            opt.value = list.name;
+            fragment.appendChild(opt);
+        });
+        sel.appendChild(fragment);
     });
 };
 
