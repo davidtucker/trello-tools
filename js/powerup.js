@@ -81,31 +81,9 @@
 //
 
 //
-// var cardButtonCallback = function(t){
-//   var items = Object.keys(parkMap).map(function(parkCode){
-//     var urlForCode = 'http://www.nps.gov/' + parkCode + '/';
-//     return {
-//       text: parkMap[parkCode],
-//       url: urlForCode,
-//       callback: function(t){
-//         return t.attach({ url: urlForCode, name: parkMap[parkCode] })
-//         .then(function(){
-//           return t.closePopup();
-//         })
-//       }
-//     };
-//   });
-//
-//   return t.popup({
-//     title: 'Popup Search Example',
-//     items: items,
-//     search: {
-//       count: 5,
-//       placeholder: 'Search National Parks',
-//       empty: 'No parks found'
-//     }
-//   });
-// };
+var dotVoteCardButtonCallback = function (t) {
+    console.log("Dot Vote Pushed");
+};
 
 var sortCardsInListPopup = function (t) {
     return t.popup({
@@ -115,41 +93,64 @@ var sortCardsInListPopup = function (t) {
     })
 };
 
-var boardButtonCallback = function (t) {
-    return t.popup({
-        title: 'Popup List Example',
-        items: [
-            {
-                text: 'Reorder List Based on Votes',
-                callback: sortCardsInListPopup
-            },
-            {
-                text: 'Clear Votes on a List',
-                callback: function (t) {
-                    return t.boardBar({
-                        url: './board-bar.html',
-                        height: 200
-                    })
-                    .then(function () {
-                        return t.closePopup();
-                    });
-                }
+var cardButtonCallback = function (t) {
+    var items = Object.keys(parkMap).map(function (parkCode) {
+        var urlForCode = 'http://www.nps.gov/' + parkCode + '/';
+        return {
+            text: parkMap[parkCode],
+            url: urlForCode,
+            callback: function (t) {
+                return t.attach({url: urlForCode, name: parkMap[parkCode]})
+                .then(function () {
+                    return t.closePopup();
+                })
             }
-        ]
+        };
     });
-};
 
-var DOT_ICON = './images/dot.png';
+    var boardButtonCallback = function (t) {
+        return t.popup({
+            title: 'Popup List Example',
+            items: [
+                {
+                    text: 'Reorder List Based on Votes',
+                    callback: sortCardsInListPopup
+                },
+                {
+                    text: 'Clear Votes on a List',
+                    callback: function (t) {
+                        return t.boardBar({
+                            url: './board-bar.html',
+                            height: 200
+                        })
+                        .then(function () {
+                            return t.closePopup();
+                        });
+                    }
+                }
+            ]
+        });
+    };
 
-TrelloPowerUp.initialize({
-    'board-buttons': function (t, options) {
-        return [{
-            icon: DOT_ICON,
-            text: 'Dot Voting Actions',
-            callback: boardButtonCallback
-        }];
-    }
-});
+    var DOT_ICON = './images/dot.png';
+    var GREY_DOT_ICON = './images/grey-dot.png';
+
+    TrelloPowerUp.initialize({
+        'board-buttons': function (t, options) {
+            return [{
+                icon: DOT_ICON,
+                text: 'Dot Voting Actions',
+                callback: boardButtonCallback
+            }];
+        },
+        'card-buttons': function (t, options) {
+            return [{
+                icon: GREY_DOT_ICON,
+                text: 'Dot Vote',
+                callback: dotVoteCardButtonCallback
+            }];
+        }
+    });
 
 /*
 ,
