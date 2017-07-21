@@ -34,6 +34,14 @@ var boardButtonCallback = function (t) {
     });
 };
 
+var getCardBadges = function(t) {
+    return t.card('name')
+    .then(function(cards) {
+        console.dir(cards);
+       return [];
+    });
+};
+
 var DOT_ICON = './images/dot.png';
 var GREY_DOT_ICON = './images/grey-dot.png';
 
@@ -51,6 +59,9 @@ TrelloPowerUp.initialize({
             text: 'Dot Vote',
             callback: dotVoteCardButtonCallback
         }];
+    },
+    'card-badges': function (t, options) {
+        return getCardBadges(t);
     }
 });
 
