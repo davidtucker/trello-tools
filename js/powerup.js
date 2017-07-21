@@ -1,5 +1,4 @@
 var dotVoteCardButtonCallback = function (t) {
-    console.log("Dot Vote Pushed");
     var oldValue = -1;
     var newValue = -1;
     return t.get('card','shared', 'com.universalmind.trello.DotVotes', 0)
@@ -9,6 +8,7 @@ var dotVoteCardButtonCallback = function (t) {
         console.log("Dot Value Incremented. Old Value: " + oldValue + " New Value: " + newValue);
         return t.set('card','shared', 'com.universalmind.trello.DotVotes', newValue);
     });
+    // TODO - Decrement User's Available Votes
 };
 
 var sortCardsInListPopup = function (t) {
@@ -19,9 +19,17 @@ var sortCardsInListPopup = function (t) {
     })
 };
 
+var clearListVotesPopup = function (t) {
+    return t.popup({
+        title: 'Select List to Clear Votes',
+        url: './clear-list.html',
+        height: 200
+    })
+};
+
 var boardButtonCallback = function (t) {
     return t.popup({
-        title: 'Popup List Example',
+        title: 'Dot Voting Actions',
         items: [
             {
                 text: 'Reorder List Based on Votes',
@@ -29,16 +37,8 @@ var boardButtonCallback = function (t) {
             },
             {
                 text: 'Clear Votes on a List',
-                callback: function (t) {
-                    return t.boardBar({
-                        url: './board-bar.html',
-                        height: 200
-                    })
-                    .then(function () {
-                        return t.closePopup();
-                    });
-                }
-            }
+                callback: clearListVotesPopup
+            },
         ]
     });
 };
@@ -46,7 +46,6 @@ var boardButtonCallback = function (t) {
 var getCardBadges = function(t) {
     return t.get('card','shared', 'com.universalmind.trello.DotVotes', 0)
     .then(function(dotVotes) {
-        console.log("CARD BADGES -> Dot Votes: " + dotVotes);
         if(dotVotes > 1) {
             return [{
                 text: dotVotes,
