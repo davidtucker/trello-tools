@@ -142,14 +142,20 @@ var boardButtonCallback = function (t) {
     });
 };
 
+var DOT_ICON = './images/dot.png';
+
 TrelloPowerUp.initialize({
     'board-buttons': function (t, options) {
         return [{
-            icon: WHITE_ICON,
+            icon: DOT_ICON,
             text: 'Dot Voting Actions',
             callback: boardButtonCallback
         }];
-    },
+    }
+});
+
+/*
+,
     'card-badges': function (t, options) {
         return getBadges(t);
     },
@@ -167,4 +173,4 @@ TrelloPowerUp.initialize({
             height: 184
         });
     }
-});
+ */
