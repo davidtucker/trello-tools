@@ -46,6 +46,7 @@ var boardButtonCallback = function (t) {
 var getCardBadges = function(t) {
     return t.get('card','shared', 'com.universalmind.trello.DotVotes', 0)
     .then(function(dotVotes) {
+        console.log("CARD BADGES -> Dot Votes: " + dotVotes);
         if(dotVotes > 1) {
             return [{
                 text: dotVotes,
