@@ -38,7 +38,7 @@ var handleClearClick = function (e) {
 
 var disableClearVotesButton = function() {
     var sel = document.getElementById('clearVotes');
-    sel.setAttribute("disabled");
+    sel.setAttribute("disabled", "");
 };
 
 var clearVotesForList = function(listId) {
