@@ -44,12 +44,21 @@ var boardButtonCallback = function (t) {
 };
 
 var getCardBadges = function(t) {
+    return getCardBadge(t, false);
+};
+
+var getCardDetailBadges = function(t) {
+    return getCardBadge(t, true);
+};
+
+var getCardBadge = function (t, isDetail) {
     return t.get('card','shared', 'com.universalmind.trello.DotVotes', 0)
     .then(function(dotVotes) {
+        var description = (isDetail) ? dotVotes + ' Votes' : dotVotes;
         if(dotVotes > 1) {
             return [{
                 title: 'Dot Votes',
-                text: dotVotes + ' Votes',
+                text: description,
                 icon: GREY_DOT_ICON
             }]
         } else {
@@ -80,6 +89,6 @@ TrelloPowerUp.initialize({
         return getCardBadges(t);
     },
     'card-detail-badges': function (t, options) {
-        return getCardBadges(t);
+        return getCardDetailBadges(t);
     }
 });
