@@ -15,7 +15,7 @@ var populateListItems = function() {
         console.dir(lists);
         var sel = document.getElementById('boardLists');
         var fragment = document.createDocumentFragment();
-        lists.forEach(function(list, index) {
+        lists.forEach(function(list) {
             var opt = document.createElement('option');
             opt.innerHTML = list.name;
             opt.value = list.name;
@@ -27,6 +27,7 @@ var populateListItems = function() {
 
 var handleSortClick = function (e) {
     console.log("Sort Click");
+    console.log("Event: " + e);
     if(isSorting) {
         return;
     }
