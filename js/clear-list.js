@@ -52,6 +52,8 @@ var disableClearVotesButton = function() {
 var clearVotesForList = function(listId) {
     return t.cards('id', 'idList')
     .then(function(cards) {
+        console.log("CARDS");
+        console.dir(cards);
         var promises = [];
         cards.forEach(function(card) {
             if (card.idList === listId) {
