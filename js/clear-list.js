@@ -5,6 +5,7 @@ console.log("Loading Clear List JavaScript");
 t.render(function(){
     console.log("RENDER");
     populateListItems();
+    t.size();
 });
 
 var isClearing = false;
