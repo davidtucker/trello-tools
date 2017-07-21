@@ -5,10 +5,8 @@ var dotVoteCardButtonCallback = function (t) {
     .then(function(data) {
         oldValue = data;
         newValue = oldValue + 1;
-        console.log("Dot Value Incremented. Old Value: " + oldValue + " New Value: " + newValue);
         return t.set('card','shared', 'com.universalmind.trello.DotVotes', newValue);
     });
-    // TODO - Decrement User's Available Votes
 };
 
 var sortCardsInListPopup = function (t) {
@@ -32,13 +30,9 @@ var boardButtonCallback = function (t) {
         title: 'Dot Voting Actions',
         items: [
             {
-                text: 'Reorder List Based on Votes',
-                callback: sortCardsInListPopup
-            },
-            {
                 text: 'Clear Votes on a List',
                 callback: clearListVotesPopup
-            },
+            }
         ]
     });
 };

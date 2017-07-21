@@ -32,12 +32,10 @@ var getSelectedListId = function() {
 };
 
 var handleClearClick = function (e) {
-    console.log("Clear Click");
     disableClearVotesButton();
     var listId = getSelectedListId();
     return clearVotesForList(listId)
     .then(function() {
-        console.log("Votes Cleared");
         t.closePopup();
     })
     .catch(function(err) {
@@ -51,15 +49,12 @@ var disableClearVotesButton = function() {
 };
 
 var clearVotesForList = function(listId) {
-    console.log("Selected List ID: " + listId);
     return t.cards('id', 'idList', 'name')
     .then(function(cards) {
-        console.log("CARDS");
         console.dir(cards);
         var promises = [];
         cards.forEach(function(card) {
             if (card.idList === listId) {
-                console.log("Card Added To Promises: " + card.name);
                 promises.push(clearVotesForCard(card));
             }
         });
