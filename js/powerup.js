@@ -54,7 +54,10 @@ var getCardDetailBadges = function(t) {
 var getCardBadge = function (t, isDetail) {
     return t.get('card','shared', 'com.universalmind.trello.DotVotes', 0)
     .then(function(dotVotes) {
-        var description = (isDetail) ? dotVotes + ' Votes' : dotVotes;
+        var description = dotVotes;
+        if(isDetail) {
+            description += ' Votes';
+        }
         if(dotVotes > 1) {
             return [{
                 title: 'Dot Votes',
