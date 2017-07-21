@@ -28,7 +28,7 @@ var populateListItems = function() {
 
 var getSelectedListId = function() {
     var select = document.getElementById('boardLists');
-    return select.options[select.selectedIndex].id;
+    return select.options[select.selectedIndex].value;
 };
 
 var handleClearClick = function (e) {
