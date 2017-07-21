@@ -13,7 +13,7 @@ var populateListItems = function() {
     return t.lists('name')
     .then(function(lists) {
         console.dir(lists);
-        var sel = document.getElementsByName('boardLists');
+        var sel = document.getElementById('boardLists');
         var fragment = document.createDocumentFragment();
         lists.forEach(function(list, index) {
             var opt = document.createElement('option');
