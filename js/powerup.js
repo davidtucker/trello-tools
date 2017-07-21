@@ -47,6 +47,7 @@ var getCardBadges = function(t) {
             color: 'blue'
         }]
     }
+    return [];
 };
 
 var DOT_ICON = './images/dot.png';
