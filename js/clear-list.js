@@ -11,7 +11,7 @@ t.render(function(){
 var isClearing = false;
 
 var populateListItems = function() {
-    return t.lists('name')
+    return t.lists('name', 'id')
     .then(function(lists) {
         console.dir(lists);
         var sel = document.getElementById('boardLists');
@@ -19,21 +19,29 @@ var populateListItems = function() {
         lists.forEach(function(list) {
             var opt = document.createElement('option');
             opt.innerHTML = list.name;
-            opt.value = list.name;
+            opt.value = list.id;
             fragment.appendChild(opt);
         });
         sel.appendChild(fragment);
     });
 };
 
-var getSelectedListName = function() {
+var getSelectedListId = function() {
     var select = document.getElementById('boardLists');
-    return select.options[select.selectedIndex].value;
+    return select.options[select.selectedIndex].id;
 };
 
 var handleClearClick = function (e) {
     console.log("Clear Click");
     disableClearVotesButton();
+    var listId = getSelectedListId();
+    return clearVotesForList(listId)
+    .then(function() {
+        console.log("Votes Cleared");
+    })
+    .catch(function(err) {
+        console.log("ERR: " + err);
+    });
 };
 
 var disableClearVotesButton = function() {
