@@ -113,9 +113,6 @@ var sortCardsInListPopup = function (t) {
         url: './sort-list.html',
         height: 200
     })
-    .then(function () {
-        return t.closePopup();
-    })
 };
 
 var boardButtonCallback = function (t) {
