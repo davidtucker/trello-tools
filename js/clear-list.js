@@ -38,6 +38,7 @@ var handleClearClick = function (e) {
     return clearVotesForList(listId)
     .then(function() {
         console.log("Votes Cleared");
+        t.closePopup();
     })
     .catch(function(err) {
         console.log("ERR: " + err);
