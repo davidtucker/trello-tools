@@ -1,9 +1,14 @@
 var dotVoteCardButtonCallback = function (t) {
     console.log("Dot Vote Pushed");
-    var oldValue = t.get('card','shared', 'com.universalmind.trello.DotVotes', 0);
-    t.set('card','shared', 'com.universalmind.trello.DotVotes', oldValue + 1);
-    var newValue = t.get('card','shared', 'com.universalmind.trello.DotVotes', 0);
-    console.log("Dot Value Incremented. Old Value: " + oldValue + " New Value: " + newValue);
+    var oldValue = -1;
+    var newValue = -1;
+    return t.get('card','shared', 'com.universalmind.trello.DotVotes', 0)
+    .then(function(data) {
+        oldValue = data;
+        newValue = oldValue + 1;
+        console.log("Dot Value Incremented. Old Value: " + oldValue + " New Value: " + newValue);
+        return t.set('card','shared', 'com.universalmind.trello.DotVotes', newValue);
+    });
 };
 
 var sortCardsInListPopup = function (t) {
@@ -39,15 +44,18 @@ var boardButtonCallback = function (t) {
 };
 
 var getCardBadges = function(t) {
-    var dotVotes = t.get('card','shared', 'com.universalmind.trello.DotVotes', 0);
-    if(dotVotes > 1) {
-        return [{
-            text: dotVotes,
-            icon: GREY_DOT_ICON,
-            color: 'blue'
-        }]
-    }
-    return [];
+    return t.get('card','shared', 'com.universalmind.trello.DotVotes', 0)
+    .then(function(dotVotes) {
+        if(dotVotes > 1) {
+            return [{
+                text: dotVotes,
+                icon: GREY_DOT_ICON,
+                color: 'blue'
+            }]
+        } else {
+            return [];
+        }
+    });
 };
 
 var DOT_ICON = './images/dot.png';
