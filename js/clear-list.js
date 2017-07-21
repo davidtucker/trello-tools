@@ -1,9 +1,6 @@
 var t = TrelloPowerUp.iframe();
 
-console.log("Loading Clear List JavaScript");
-
 t.render(function(){
-    console.log("RENDER");
     populateListItems();
     t.sizeTo('#content');
 });
@@ -13,7 +10,6 @@ var isClearing = false;
 var populateListItems = function() {
     return t.lists('name', 'id')
     .then(function(lists) {
-        console.dir(lists);
         var sel = document.getElementById('boardLists');
         var fragment = document.createDocumentFragment();
         lists.forEach(function(list) {
@@ -51,7 +47,6 @@ var disableClearVotesButton = function() {
 var clearVotesForList = function(listId) {
     return t.cards('id', 'idList', 'name')
     .then(function(cards) {
-        console.dir(cards);
         var promises = [];
         cards.forEach(function(card) {
             if (card.idList === listId) {
