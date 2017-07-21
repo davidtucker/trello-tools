@@ -25,9 +25,15 @@ var populateListItems = function() {
     });
 };
 
+var getSelectedListName = function() {
+    var select = document.getElementById('boardLists');
+    return select.options[select.selectedIndex].value;
+};
+
 var handleSortClick = function (e) {
     console.log("Sort Click");
-    console.log("Event: " + e);
+    var selectedListName = getSelectedListName();
+    console.log("Selected List Name: " + selectedListName);
     if(isSorting) {
         return;
     }
