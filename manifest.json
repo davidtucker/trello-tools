@@ -1,0 +1,24 @@
+{
+  "name": "Universal Mind Tools",
+  "description": "",
+  "details": "A set of tools used by the team at Universal Mind to augment the usefulness of Trello.",
+  "icon": {
+    "url": "./images/logo.png"
+  },
+  "author": "Universal Mind",
+  "capabilities": [
+    "board-buttons",
+    "callback",
+    "card-badges",
+    "card-buttons",
+    "show-settings"
+  ],
+  "connectors": {
+    "iframe": {
+      "url": "./index.html"
+    }
+  },
+  "recommend": {
+    "urls": []
+  }
+}
