@@ -5,7 +5,7 @@ console.log("Loading Sort List JavaScript");
 t.render(function(){
     console.log("RENDER");
     populateListItems();
-    t.size();
+    t.sizeTo('#content');
 });
 
 var isSorting = false;
