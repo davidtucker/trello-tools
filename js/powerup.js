@@ -63,7 +63,7 @@ var getCardDetailBadges = function(t) {
         if(dotVotes > 1) {
             return [{
                 title: 'Dot Votes',
-                text: dotVotes + ' Votes'
+                text: dotVotes + ' Votes',
                 icon: GREY_DOT_ICON
             }]
         } else {
