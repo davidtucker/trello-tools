@@ -55,6 +55,7 @@ var clearVotesForList = function(listId) {
         var promises = [];
         cards.forEach(function(card) {
             if (card.idList === listId) {
+                console.log("Card Added To Promises: " + card.name);
                 promises.push(clearVotesForCard(card));
             }
         });
