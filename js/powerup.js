@@ -1,5 +1,9 @@
 var dotVoteCardButtonCallback = function (t) {
     console.log("Dot Vote Pushed");
+    var oldValue = t.get('card','shared', 'com.universalmind.trello.DotVotes', 0);
+    t.set('card','shared', 'com.universalmind.trello.DotVotes', oldValue + 1);
+    var newValue = t.get('card','shared', 'com.universalmind.trello.DotVotes', 0);
+    console.log("Dot Value Incremented. Old Value: " + oldValue + " New Value: " + newValue);
 };
 
 var sortCardsInListPopup = function (t) {
@@ -35,11 +39,14 @@ var boardButtonCallback = function (t) {
 };
 
 var getCardBadges = function(t) {
-    return t.card('name')
-    .then(function(cards) {
-        console.dir(cards);
-       return [];
-    });
+    var dotVotes = t.get('card','shared', 'com.universalmind.trello.DotVotes', 0);
+    if(dotVotes > 1) {
+        return [{
+            text: dotVotes,
+            icon: GREY_DOT_ICON,
+            color: 'blue'
+        }]
+    }
 };
 
 var DOT_ICON = './images/dot.png';
