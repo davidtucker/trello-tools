@@ -50,6 +50,7 @@ var disableClearVotesButton = function() {
 };
 
 var clearVotesForList = function(listId) {
+    console.log("Selected List ID: " + listId);
     return t.cards('id', 'idList')
     .then(function(cards) {
         console.log("CARDS");
