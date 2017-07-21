@@ -1,4 +1,3 @@
-//
 var dotVoteCardButtonCallback = function (t) {
     console.log("Dot Vote Pushed");
 };
