@@ -128,7 +128,7 @@ var getIDSBadges = function(t, members) {
                 callback: idsCallback
             });
         }
-        if(ids.what !== undefined && ids.what !== '') {
+        if(ids.what !== undefined && ids.what.trim() !== '') {
             cards.push({
                 title: 'IDS',
                 text: 'Issue: ' + ids.what,

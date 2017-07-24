@@ -39,7 +39,7 @@ var clearVotesForList = function(listId) {
             }
         });
         return Promise.all(promises);
-    })
+    });
 };
 
 var clearVotesForCard = function (card) {
