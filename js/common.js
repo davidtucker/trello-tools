@@ -39,6 +39,13 @@ UMTrello.enableButton = function(buttonId) {
     sel.removeAttribute("disabled");
 };
 
+UMTrello.getMembersNameFromID = function(members, id) {
+    var member = members.find(function(item) {
+        return item.id === id;
+    });
+    return member.fullName;
+};
+
 UMTrello.getMembersFirstName = function(member) {
     return member.fullName.split(' ')[0];
 };

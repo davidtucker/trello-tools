@@ -33,8 +33,8 @@ var populateForm = function() {
 
 var updateFormState = function(data) {
     document.getElementById('idsWhat').value = data.what ? data.what : '';
-    document.getElementById('idsReporter').value = data.reporter;
-    document.getElementById('idsAssignee').value = data.assignee;
+    document.getElementById('idsReporter').value = data.reporter ? data.reporter : 0;
+    document.getElementById('idsAssignee').value = data.assignee ? data.assignee : 0;
 };
 
 var handleIDSSave = function (e) {

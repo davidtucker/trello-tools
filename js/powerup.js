@@ -107,6 +107,29 @@ var getCardDetailBadges = function(t, members) {
     });
 };
 
+var getIDSBadges = function(t, members) {
+    return t.get('card', 'shared', UMTrello.constants.data.ids, {})
+    .then(function(ids) {
+        var cards = [];
+        if(ids.reporter !== undefined && ids.reporter !== 0) {
+            cards.push({
+                text: 'Reporter: ' + UMTrello.getMembersNameFromID(members, ids.reporter)
+            });
+        }
+        if(ids.assignee !== undefined && ids.assignee !== 0) {
+            cards.push({
+                text: 'Reporter: ' + UMTrello.getMembersNameFromID(members, ids.assignee)
+            });
+        }
+        if(ids.what !== undefined && ids.what !== '') {
+            cards.push({
+                text: 'Issue: ' + ids.what
+            });
+        }
+        return cards;
+    });
+};
+
 var DOT_ICON = './images/dot.png';
 var GREY_DOT_ICON = './images/grey-dot.png';
 
@@ -130,12 +153,21 @@ TrelloPowerUp.initialize({
         }];
     },
     'card-badges': function (t, options) {
-        return getCardBadges(t);
+        return t.board('members')
+        .then(function(result) {
+            Promise.all(getCardBadges(t), getIDSBadges(t, result.members))
+            .then(function(dotVotingBadges, idsBadges) {
+                return idsBadges.concat(dotVotingBadges);
+            });
+        });
     },
     'card-detail-badges': function (t, options) {
         return t.board('members')
         .then(function(result) {
-            return getCardDetailBadges(t, result.members);
+            Promise.all(getCardDetailBadges(t, result.members), getIDSBadges(t, result.members))
+            .then(function(dotVotingBadges, idsBadges) {
+                return idsBadges.concat(dotVotingBadges);
+            });
         });
     }
 });
