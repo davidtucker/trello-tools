@@ -47,8 +47,7 @@ var handleIDSSave = function (e) {
     };
     return t.set('card', 'shared', UMTrello.constants.data.ids, data)
     .then(function() {
-        UMTrello.enableButton('updateIDS');
-        UMTrello.enableButton('deleteIDS');
+        t.closePopup();
     });
 };
 
