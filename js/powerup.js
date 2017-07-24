@@ -1,3 +1,5 @@
+var t = TrelloPowerUp.iframe();
+
 var dotVoteCardButtonCallback = function (t) {
     var currentMember = {};
     return t.member('all')
