@@ -1,11 +1,19 @@
 var dotVoteCardButtonCallback = function (t) {
-    var oldValue = -1;
-    var newValue = -1;
-    return t.get('card','shared', UMTrello.constants.data.votes, 0)
-    .then(function(data) {
-        oldValue = data;
-        newValue = oldValue + 1;
-        return t.set('card','shared', UMTrello.constants.data.votes, newValue);
+    var currentMember = {};
+    return t.member('all')
+    .then(function(member) {
+        currentMember = member;
+        return t.get('card', 'shared', UMTrello.constants.data.votes, {});
+    })
+    .then(function(currentVotes) {
+        if(currentVotes[currentMember.id] === undefined) {
+            currentVotes[currentMember.id] = 0;
+        }
+        console.log("Old Value: " + currentVotes[currentMember.id]);
+        currentVotes[currentMember.id]++;
+        console.log("New Value: " + currentVotes[currentMember.id]);
+        console.dir(currentVotes);
+        return t.set('card', 'shared', UMTrello.constants.data.votes, currentVotes);
     });
 };
 
@@ -41,26 +49,47 @@ var getCardBadges = function(t) {
     return getCardBadge(t, false);
 };
 
-var getCardDetailBadges = function(t) {
-    return getCardBadge(t, true);
-};
-
 var getCardBadge = function (t, isDetail) {
     return t.get('card','shared', UMTrello.constants.data.votes, 0)
     .then(function(dotVotes) {
-        var description = dotVotes;
-        if(isDetail) {
-            description += ' Votes';
+        var votes = 0;
+        for(var key in dotVotes) {
+            votes += dotVotes[key];
         }
-        if(dotVotes > 1) {
-            return [{
-                title: 'Dot Votes',
-                text: description,
-                icon: GREY_DOT_ICON
-            }]
-        } else {
-            return [];
+        return [{
+           text: votes,
+           icon: GREY_DOT_ICON
+        }];
+    });
+};
+
+var getMemberFirstName = function(id, members) {
+    var member = members.find(function(element) {
+        return element.id === id;
+    });
+    if(member) {
+        return UMTrello.getMembersFirstName(member);
+    }
+    console.log("Could not find member and/or name for member");
+    return "";
+};
+
+var getCardDetailBadges = function(t, members) {
+    return t.get('card', 'shared', UMTrello.constants.data.votes, {})
+    .then(function(dotVotes) {
+        var cards = [];
+        for(var key in dotVotes) {
+            if(dotVotes[key] <= 0) {
+                var description = dotVotes[key] + " votes";
+                var memberName = getMemberFirstName(key, members);
+                cards.push({
+                    title: memberName,
+                    text: description,
+                    icon: GREY_DOT_ICON
+                });
+            }
         }
+        return cards;
     });
 };
 
@@ -86,6 +115,9 @@ TrelloPowerUp.initialize({
         return getCardBadges(t);
     },
     'card-detail-badges': function (t, options) {
-        return getCardDetailBadges(t);
+        return t.board('members')
+        .then(function(members) {
+            return getCardDetailBadges(t, members);
+        });
     }
 });
