@@ -64,7 +64,7 @@ var idsCallback = function (t) {
 };
 
 var getCardBadges = function (t) {
-    return t.get('card','shared', UMTrello.constants.data.votes, 0)
+    return t.get('card','shared', UMTrello.constants.data.votes, {})
     .then(function(dotVotes) {
         var votes = 0;
         for(var key in dotVotes) {
