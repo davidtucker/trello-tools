@@ -8,7 +8,7 @@ t.render(function(){
 var populateListItems = function() {
     return t.lists('name', 'id')
     .then(function(lists) {
-        UMTrello.populateSelectListBasedOnData('boardLists', lists, function(list) {
+        UMTrello.populateSelectListBasedOnData('boardLists', lists, 'All Lists', function(list) {
            return {
                name: list.name,
                value: list.id
@@ -34,7 +34,7 @@ var clearVotesForList = function(listId) {
     .then(function(cards) {
         var promises = [];
         cards.forEach(function(card) {
-            if (card.idList === listId) {
+            if(listId === 0 || card.idList === listId) {
                 promises.push(clearVotesForCard(card));
             }
         });
