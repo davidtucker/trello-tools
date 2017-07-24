@@ -136,8 +136,8 @@ var getIDSBadges = function(t, members) {
                 callback: idsCallback
             });
         }
-        // console.log("IDS Cards");
-        // console.dir(cards);
+        console.log("IDS Cards");
+        console.dir(cards);
         return cards;
     })
     .catch(function(err) {
@@ -192,9 +192,6 @@ TrelloPowerUp.initialize({
             return Promise.all([getCardBadges(t), getIDSBadges(t, members)])
             .spread(function(dotVotingBadges, idsBadges) {
                 var output = idsBadges.concat(dotVotingBadges);
-                if(output.length === 0) {
-                    output.push({});
-                }
                 console.log("Output");
                 console.dir(output);
                 return output;
@@ -211,9 +208,6 @@ TrelloPowerUp.initialize({
             return Promise.all([getCardDetailBadges(t, members), getIDSBadges(t, members)])
             .spread(function (dotVotingBadges, idsBadges) {
                 var output = idsBadges.concat(dotVotingBadges);
-                if (output.length === 0) {
-                    output.push({});
-                }
                 console.log("Output");
                 console.dir(output);
                 return output;
