@@ -56,10 +56,13 @@ var getCardBadge = function (t, isDetail) {
         for(var key in dotVotes) {
             votes += dotVotes[key];
         }
-        return [{
-           text: votes,
-           icon: GREY_DOT_ICON
-        }];
+        if(votes > 0) {
+            return [{
+                text: votes,
+                icon: GREY_DOT_ICON
+            }];
+        }
+        return [];
     });
 };
 
@@ -79,7 +82,7 @@ var getCardDetailBadges = function(t, members) {
     .then(function(dotVotes) {
         var cards = [];
         for(var key in dotVotes) {
-            if(dotVotes[key] <= 0) {
+            if(dotVotes[key] > 0) {
                 var description = dotVotes[key] + " votes";
                 var memberName = getMemberFirstName(key, members);
                 cards.push({
