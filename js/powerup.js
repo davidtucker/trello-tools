@@ -1,5 +1,3 @@
-var t = TrelloPowerUp.iframe();
-
 var dotVoteCardButtonCallback = function (t) {
     var currentMember = {};
     return t.member('all')
@@ -142,55 +140,81 @@ var getIDSBadges = function(t, members) {
 var DOT_ICON = './images/dot.png';
 var GREY_DOT_ICON = './images/grey-dot.png';
 
-t.board('all')
-.then(function(board) {
-    TrelloPowerUp.initialize({
-        'board-buttons': function (t, options) {
-            return [{
-                icon: DOT_ICON,
-                text: 'Dot Voting Actions',
-                callback: boardButtonCallback
-            }];
-        },
-        'card-buttons': function (t, options) {
-            return [{
-                icon: GREY_DOT_ICON,
-                text: 'Dot Vote',
-                callback: dotVoteCardButtonCallback
-            }, {
-                icon: GREY_DOT_ICON,
-                text:  'IDS',
-                callback: idsCallback
-            }];
-        },
-        'card-badges': function (t, options) {
-            return Promise.all([getCardBadges(t), getIDSBadges(t, board.members)])
-            .spread(function(dotVotingBadges, idsBadges) {
-                var output = idsBadges.concat(dotVotingBadges);
-                if(output.length === 0) {
-                    output.push({});
-                }
-                console.log("Output");
-                console.dir(output);
-                return output;
-            })
-            .catch(function(err) {
-                console.log("Error on Card Badges");
-                console.dir(err);
-            });
-        },
-        'card-detail-badges': function (t, options) {
-            return Promise.all([getCardDetailBadges(t, board.members), getIDSBadges(t, board.members)])
-            .spread(function(dotVotingBadges, idsBadges) {
-                var output = idsBadges.concat(dotVotingBadges);
-                if(output.length === 0) {
-                    output.push({});
-                }
-                console.log("Output");
-                console.dir(output);
-                return output;
-            });
+var _members;
+var getMembers = function(t) {
+    return new Promise(function(resolve, reject) {
+        if(_members !== undefined) {
+            resolve(_members);
         }
+        return t.board('members')
+        .then(function(board) {
+            _members = board.members;
+            resolve(_members);
+        })
+        .catch(function(err) {
+            reject(err);
+        });
     });
-})
+
+};
+
+TrelloPowerUp.initialize({
+    'board-buttons': function (t, options) {
+        return [{
+            icon: DOT_ICON,
+            text: 'Dot Voting Actions',
+            callback: boardButtonCallback
+        }];
+    },
+    'card-buttons': function (t, options) {
+        return [{
+            icon: GREY_DOT_ICON,
+            text: 'Dot Vote',
+            callback: dotVoteCardButtonCallback
+        }, {
+            icon: GREY_DOT_ICON,
+            text:  'IDS',
+            callback: idsCallback
+        }];
+    },
+    'card-badges': function (t, options) {
+        return getMembers(t)
+        .then(function(members) {
+            Promise.all([getCardBadges(t), getIDSBadges(t, members)])
+            .spread(function(dotVotingBadges, idsBadges) {
+                var output = idsBadges.concat(dotVotingBadges);
+                if(output.length === 0) {
+                    output.push({});
+                }
+                console.log("Output");
+                console.dir(output);
+                return output;
+            });
+        })
+        .catch(function(err) {
+            console.log("Error on Card Badges");
+            console.dir(err);
+        });
+    },
+    'card-detail-badges': function (t, options) {
+        return getMembers(t)
+        .then(function(members) {
+            return Promise.all([getCardDetailBadges(t, board.members), getIDSBadges(t, board.members)])
+            .spread(function (dotVotingBadges, idsBadges) {
+                var output = idsBadges.concat(dotVotingBadges);
+                if (output.length === 0) {
+                    output.push({});
+                }
+                console.log("Output");
+                console.dir(output);
+                return output;
+            });
+        })
+        .catch(function(err) {
+            console.log("Error on Detail Card Badges");
+            console.dir(err);
+        });
+    }
+});
+
 
