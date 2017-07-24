@@ -64,9 +64,9 @@ var getCardBadge = function (t, isDetail) {
     })
     .then(function() {
         // DEBUG
-        return t.board('all')
-        .then(function(board) {
-            console.dir(board);
+        return t.member('all')
+        .then(function(members) {
+            console.dir(members);
         });
     })
 };

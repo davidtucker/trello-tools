@@ -28,6 +28,10 @@ UMTrello.disableButton = function(buttonId) {
     sel.setAttribute("disabled", "");
 };
 
+UMTrello.getMembersFirstName = function(member) {
+    return member.fullName.split(' ')[0];
+};
+
 UMTrello.constants = {};
 UMTrello.constants.data = {
     votes: 'com.universalmind.trello.DotVotes'
