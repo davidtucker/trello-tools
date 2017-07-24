@@ -114,11 +114,31 @@ var getCardDetailBadges = function(t, members) {
     });
 };
 
+var isValidPersonData = function(ids, value) {
+    if(!ids.hasOwnProperty(value)) {
+        return false;
+    }
+
+    if(ids[value] === undefined) {
+        return false;
+    }
+
+    if(ids[value] === 0) {
+        return false;
+    }
+
+    if(ids[value] === '0') {
+        return false;
+    }
+
+    return true;
+};
+
 var getIDSBadges = function(t, members) {
     return t.get('card', 'shared', UMTrello.constants.data.ids, {})
     .then(function(ids) {
         var cards = [];
-        if(ids.hasOwnProperty('reporter') && ids.reporter !== undefined && ids.reporter !== 0) {
+        if(isValidPersonData(ids, 'reporter')) {
             cards.push({
                 title: 'IDS',
                 text: 'Reporter: ' + UMTrello.getMembersNameFromID(members, ids.reporter),
@@ -126,7 +146,7 @@ var getIDSBadges = function(t, members) {
                 callback: idsCallback
             });
         }
-        if(ids.hasOwnProperty('assignee') && ids.assignee !== undefined && ids.assignee !== 0) {
+        if(isValidPersonData(ids, 'assignee')) {
             cards.push({
                 title: 'IDS',
                 text: 'Reporter: ' + UMTrello.getMembersNameFromID(members, ids.assignee),
