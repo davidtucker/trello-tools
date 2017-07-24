@@ -10,16 +10,18 @@ var populateForm = function() {
     return t.board('all')
     .then(function(board) {
         members = board.members;
-        UMTrello.populateSelectListBasedOnData('idsReporter', members, 'Select a Reporter', function(list) {
+        console.log(members);
+        console.dir(members);
+        UMTrello.populateSelectListBasedOnData('idsReporter', members, 'Select a Reporter', function(member) {
             return {
-                name: list.name,
-                value: list.id
+                name: member.fullName,
+                value: member.id
             };
         });
-        UMTrello.populateSelectListBasedOnData('idsAssignee', members, 'Select an Assignee', function(list) {
+        UMTrello.populateSelectListBasedOnData('idsAssignee', members, 'Select an Assignee', function(member) {
             return {
-                name: list.name,
-                value: list.id
+                name: member.fullName,
+                value: member.id
             };
         });
         return t.get('card', 'shared', UMTrello.constants.data.ids, {})
@@ -30,7 +32,7 @@ var populateForm = function() {
 };
 
 var updateFormState = function(data) {
-    document.getElementById('idsWhat').value = data.what;
+    document.getElementById('idsWhat').value = data.what ? data.what : '';
     document.getElementById('idsReporter').value = data.reporter;
     document.getElementById('idsAssignee').value = data.assignee;
 };
