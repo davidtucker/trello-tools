@@ -1,8 +1,14 @@
 UMTrello = {};
 
-UMTrello.populateSelectListBasedOnData = function(selId, data, mapping) {
+UMTrello.populateSelectListBasedOnData = function(selId, data, nullItem, mapping) {
     var sel = document.getElementById(selId);
     var fragment = document.createDocumentFragment();
+    if(nullItem) {
+        var opt = document.createElement('option');
+        opt.innerHTML = nullItem;
+        opt.value = 0;
+        fragment.appendChild(opt);
+    }
     data.forEach(function(item) {
         var opt = document.createElement('option');
         var itemData = mapping(item);
@@ -28,12 +34,18 @@ UMTrello.disableButton = function(buttonId) {
     sel.setAttribute("disabled", "");
 };
 
+UMTrello.enableButton = function(buttonId) {
+    var sel = document.getElementById(buttonId);
+    sel.removeAttribute("disabled");
+};
+
 UMTrello.getMembersFirstName = function(member) {
     return member.fullName.split(' ')[0];
 };
 
 UMTrello.constants = {};
 UMTrello.constants.data = {
-    votes: 'com.universalmind.trello.DotVotes'
+    votes: 'com.universalmind.trello.DotVotes',
+    ids: 'com.universalmind.trello.IDS'
 };
 

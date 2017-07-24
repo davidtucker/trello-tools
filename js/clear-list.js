@@ -8,21 +8,13 @@ t.render(function(){
 var populateListItems = function() {
     return t.lists('name', 'id')
     .then(function(lists) {
-        var sel = document.getElementById('boardLists');
-        var fragment = document.createDocumentFragment();
-        lists.forEach(function(list) {
-            var opt = document.createElement('option');
-            opt.innerHTML = list.name;
-            opt.value = list.id;
-            fragment.appendChild(opt);
+        UMTrello.populateSelectListBasedOnData('boardLists', lists, function(list) {
+           return {
+               name: list.name,
+               value: list.id
+           };
         });
-        sel.appendChild(fragment);
     });
-};
-
-var getSelectedListId = function() {
-    var select = document.getElementById('boardLists');
-    return select.options[select.selectedIndex].value;
 };
 
 var handleClearClick = function (e) {

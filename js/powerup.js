@@ -45,6 +45,13 @@ var boardButtonCallback = function (t) {
     });
 };
 
+var idsCallback = function (t) {
+    return t.popup({
+        title: 'IDS Discovery',
+        url: './ids.html',
+        height: 200
+    })
+};
 var getCardBadges = function(t) {
     return getCardBadge(t, false);
 };
@@ -67,8 +74,6 @@ var getCardBadge = function (t, isDetail) {
 };
 
 var getMemberFirstName = function(id, members) {
-    console.log("Members");
-    console.dir(members);
     var member = members.find(function(element) {
         return element.id === id;
     });
@@ -118,6 +123,10 @@ TrelloPowerUp.initialize({
             icon: GREY_DOT_ICON,
             text: 'Dot Vote',
             callback: dotVoteCardButtonCallback
+        }, {
+            icon: GREY_DOT_ICON,
+            text:  'IDS',
+            callback: idsCallback
         }];
     },
     'card-badges': function (t, options) {
