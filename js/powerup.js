@@ -3,6 +3,8 @@ var dotVoteCardButtonCallback = function (t) {
     return t.member('all')
     .then(function(member) {
         currentMember = member;
+        console.log("Current Member");
+        console.dir(currentMember);
         return t.get('card', 'shared', UMTrello.constants.data.votes, {});
     })
     .then(function(currentVotes) {
