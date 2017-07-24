@@ -114,18 +114,21 @@ var getIDSBadges = function(t, members) {
         var cards = [];
         if(ids.reporter !== undefined && ids.reporter !== 0) {
             cards.push({
+                title: 'IDS',
                 text: 'Reporter: ' + UMTrello.getMembersNameFromID(members, ids.reporter),
                 icon: GREY_DOT_ICON
             });
         }
         if(ids.assignee !== undefined && ids.assignee !== 0) {
             cards.push({
+                title: 'IDS',
                 text: 'Reporter: ' + UMTrello.getMembersNameFromID(members, ids.assignee),
                 icon: GREY_DOT_ICON
             });
         }
         if(ids.what !== undefined && ids.what !== '') {
             cards.push({
+                title: 'IDS',
                 text: 'Issue: ' + ids.what,
                 icon: GREY_DOT_ICON
             });
