@@ -140,29 +140,45 @@ var getIDSBadges = function(t, members) {
 var DOT_ICON = './images/dot.png';
 var GREY_DOT_ICON = './images/grey-dot.png';
 
-TrelloPowerUp.initialize({
-    'board-buttons': function (t, options) {
-        return [{
-            icon: DOT_ICON,
-            text: 'Dot Voting Actions',
-            callback: boardButtonCallback
-        }];
-    },
-    'card-buttons': function (t, options) {
-        return [{
-            icon: GREY_DOT_ICON,
-            text: 'Dot Vote',
-            callback: dotVoteCardButtonCallback
-        }, {
-            icon: GREY_DOT_ICON,
-            text:  'IDS',
-            callback: idsCallback
-        }];
-    },
-    'card-badges': function (t, options) {
-        return t.board('members')
-        .then(function(result) {
-            Promise.all([getCardBadges(t), getIDSBadges(t, result.members)])
+t.board('all')
+.then(function(board) {
+    TrelloPowerUp.initialize({
+        'board-buttons': function (t, options) {
+            return [{
+                icon: DOT_ICON,
+                text: 'Dot Voting Actions',
+                callback: boardButtonCallback
+            }];
+        },
+        'card-buttons': function (t, options) {
+            return [{
+                icon: GREY_DOT_ICON,
+                text: 'Dot Vote',
+                callback: dotVoteCardButtonCallback
+            }, {
+                icon: GREY_DOT_ICON,
+                text:  'IDS',
+                callback: idsCallback
+            }];
+        },
+        'card-badges': function (t, options) {
+            return Promise.all([getCardBadges(t), getIDSBadges(t, board.members)])
+            .spread(function(dotVotingBadges, idsBadges) {
+                var output = idsBadges.concat(dotVotingBadges);
+                if(output.length === 0) {
+                    output.push({});
+                }
+                console.log("Output");
+                console.dir(output);
+                return output;
+            })
+            .catch(function(err) {
+                console.log("Error on Card Badges");
+                console.dir(err);
+            });
+        },
+        'card-detail-badges': function (t, options) {
+            return Promise.all([getCardDetailBadges(t, board.members), getIDSBadges(t, board.members)])
             .spread(function(dotVotingBadges, idsBadges) {
                 var output = idsBadges.concat(dotVotingBadges);
                 if(output.length === 0) {
@@ -172,29 +188,7 @@ TrelloPowerUp.initialize({
                 console.dir(output);
                 return output;
             });
-        })
-        .catch(function(err) {
-            console.log("Error on Card Badges");
-            console.dir(err);
-        });
-    },
-    'card-detail-badges': function (t, options) {
-        return t.board('members')
-        .then(function(result) {
-            Promise.all([getCardDetailBadges(t, result.members), getIDSBadges(t, result.members)])
-            .spread(function(dotVotingBadges, idsBadges) {
-                var output = idsBadges.concat(dotVotingBadges);
-                if(output.length === 0) {
-                    output.push({});
-                }
-                console.log("Output");
-                console.dir(output);
-                return output;
-            });
-        })
-        .catch(function(err) {
-            console.log("Error on Card Detail Badges");
-            console.dir(err);
-        });
-    }
-});
+        }
+    });
+})
+
