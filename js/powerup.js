@@ -67,6 +67,8 @@ var getCardBadge = function (t, isDetail) {
 };
 
 var getMemberFirstName = function(id, members) {
+    console.log("Members");
+    console.dir(members);
     var member = members.find(function(element) {
         return element.id === id;
     });
@@ -123,8 +125,8 @@ TrelloPowerUp.initialize({
     },
     'card-detail-badges': function (t, options) {
         return t.board('members')
-        .then(function(members) {
-            return getCardDetailBadges(t, members);
+        .then(function(result) {
+            return getCardDetailBadges(t, result.members);
         });
     }
 });
