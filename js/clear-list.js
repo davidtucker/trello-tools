@@ -35,6 +35,7 @@ var clearVotesForList = function(listId) {
         var promises = [];
         cards.forEach(function(card) {
             if(listId === 0 || card.idList === listId) {
+                console.log("Clear Card");
                 promises.push(clearVotesForCard(card));
             }
         });

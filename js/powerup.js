@@ -3,22 +3,16 @@ var dotVoteCardButtonCallback = function (t) {
     return t.member('all')
     .then(function(member) {
         currentMember = member;
-        console.log("Current Member");
-        console.dir(currentMember);
         return t.get('card', 'shared', UMTrello.constants.data.votes, {});
     })
     .then(function(currentVotes) {
-        console.log("Current")
         if(currentVotes === 0) {
             currentVotes = {};
         }
         if(!currentVotes.hasOwnProperty(currentMember.id) || currentVotes === 0) {
             currentVotes[currentMember.id] = 0;
         }
-        console.log("Old Value: " + currentVotes[currentMember.id]);
         currentVotes[currentMember.id]++;
-        console.log("New Value: " + currentVotes[currentMember.id]);
-        console.dir(currentVotes);
         return t.set('card', 'shared', UMTrello.constants.data.votes, currentVotes);
     })
     .catch(function(err) {
@@ -89,11 +83,8 @@ var getMemberFirstName = function(id, members) {
         return element.id === id;
     });
     if(member) {
-        console.log("Member");
-        console.dir(member);
         return UMTrello.getMembersFirstName(member);
     }
-    console.log("Could not find member and/or name for member");
     return "";
 };
 
@@ -168,8 +159,6 @@ var getIDSBadges = function(t, members) {
                 callback: idsCallback
             });
         }
-        // console.log("IDS Cards");
-        // console.dir(cards);
         return cards;
     })
     .catch(function(err) {
@@ -224,8 +213,6 @@ TrelloPowerUp.initialize({
             return Promise.all([getCardBadges(t), getIDSBadges(t, members)])
             .spread(function(dotVotingBadges, idsBadges) {
                 var output = idsBadges.concat(dotVotingBadges);
-                console.log("Output");
-                console.dir(output);
                 return output;
             });
         })
@@ -240,8 +227,6 @@ TrelloPowerUp.initialize({
             return Promise.all([getCardDetailBadges(t, members), getIDSBadges(t, members)])
             .spread(function (dotVotingBadges, idsBadges) {
                 var output = idsBadges.concat(dotVotingBadges);
-                console.log("Output");
-                console.dir(output);
                 return output;
             });
         })
