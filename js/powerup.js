@@ -162,7 +162,7 @@ TrelloPowerUp.initialize({
         return t.board('members')
         .then(function(result) {
             Promise.all(getCardBadges(t), getIDSBadges(t, result.members))
-            .then(function(dotVotingBadges, idsBadges) {
+            .spread(function(dotVotingBadges, idsBadges) {
                 return idsBadges.concat(dotVotingBadges);
             });
         })
@@ -175,7 +175,7 @@ TrelloPowerUp.initialize({
         return t.board('members')
         .then(function(result) {
             Promise.all(getCardDetailBadges(t, result.members), getIDSBadges(t, result.members))
-            .then(function(dotVotingBadges, idsBadges) {
+            .spread(function(dotVotingBadges, idsBadges) {
                 return idsBadges.concat(dotVotingBadges);
             });
         })
