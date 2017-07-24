@@ -61,14 +61,7 @@ var getCardBadge = function (t, isDetail) {
         } else {
             return [];
         }
-    })
-    .then(function() {
-        // DEBUG
-        return t.member('all')
-        .then(function(members) {
-            console.dir(members);
-        });
-    })
+    });
 };
 
 var DOT_ICON = './images/dot.png';
