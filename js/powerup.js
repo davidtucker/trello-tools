@@ -116,7 +116,7 @@ var getIDSBadges = function(t, members) {
     return t.get('card', 'shared', UMTrello.constants.data.ids, {})
     .then(function(ids) {
         var cards = [];
-        if(ids.reporter !== undefined && ids.reporter !== 0) {
+        if(ids.hasOwnProperty('reporter') && ids.reporter !== undefined && ids.reporter !== 0) {
             cards.push({
                 title: 'IDS',
                 text: 'Reporter: ' + UMTrello.getMembersNameFromID(members, ids.reporter),
@@ -124,7 +124,7 @@ var getIDSBadges = function(t, members) {
                 callback: idsCallback
             });
         }
-        if(ids.assignee !== undefined && ids.assignee !== 0) {
+        if(ids.hasOwnProperty('assignee') && ids.assignee !== undefined && ids.assignee !== 0) {
             cards.push({
                 title: 'IDS',
                 text: 'Reporter: ' + UMTrello.getMembersNameFromID(members, ids.assignee),
@@ -132,7 +132,7 @@ var getIDSBadges = function(t, members) {
                 callback: idsCallback
             });
         }
-        if(ids.what !== undefined && ids.what.trim() !== '') {
+        if(ids.hasOwnProperty('what') && ids.what !== undefined && ids.what.trim() !== '') {
             cards.push({
                 title: 'IDS',
                 text: 'Issue: ' + ids.what,
