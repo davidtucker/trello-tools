@@ -127,8 +127,8 @@ var getIDSBadges = function(t, members) {
                 text: 'Issue: ' + ids.what
             });
         }
-        console.log("IDS Cards");
-        console.dir(cards);
+        // console.log("IDS Cards");
+        // console.dir(cards);
         return cards;
     })
     .catch(function(err) {
@@ -168,7 +168,9 @@ TrelloPowerUp.initialize({
                 if(output.length === 0) {
                     output.push({});
                 }
-                return output;;
+                console.log("Output");
+                console.dir(output);
+                return output;
             });
         })
         .catch(function(err) {
@@ -185,6 +187,8 @@ TrelloPowerUp.initialize({
                 if(output.length === 0) {
                     output.push({});
                 }
+                console.log("Output");
+                console.dir(output);
                 return output;
             });
         })
