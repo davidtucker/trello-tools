@@ -5,8 +5,6 @@ t.render(function(){
     t.sizeTo('#content');
 });
 
-var isClearing = false;
-
 var populateListItems = function() {
     return t.lists('name', 'id')
     .then(function(lists) {
@@ -53,5 +51,5 @@ var clearVotesForList = function(listId) {
 };
 
 var clearVotesForCard = function (card) {
-    return t.set(card.id, 'shared', UMTrello.constants.data.votes, 0);
+    return t.remove(card.id, 'shared', UMTrello.constants.data.votes);
 };
