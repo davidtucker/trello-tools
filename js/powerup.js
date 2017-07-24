@@ -205,7 +205,7 @@ TrelloPowerUp.initialize({
     'card-detail-badges': function (t, options) {
         return getMembers(t)
         .then(function(members) {
-            return Promise.all([getCardDetailBadges(t, board.members), getIDSBadges(t, board.members)])
+            return Promise.all([getCardDetailBadges(t, members), getIDSBadges(t, members)])
             .spread(function (dotVotingBadges, idsBadges) {
                 var output = idsBadges.concat(dotVotingBadges);
                 if (output.length === 0) {
