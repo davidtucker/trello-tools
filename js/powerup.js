@@ -135,18 +135,21 @@ var getIDSBadges = function(t, members, isDetail) {
     return t.get('card', 'shared', UMTrello.constants.data.ids, {})
     .then(function(ids) {
         var cards = [];
+
         if(isValidPersonData(ids, 'reporter')) {
+            var name = UMTrello.getMembersNameFromID(members, ids.reporter);
             cards.push({
                 title: 'IDS Reporter:',
-                text: 'Reporter: ' + UMTrello.getMembersNameFromID(members, ids.reporter),
+                text: (isDetail) ? name : 'Reporter: ' + name,
                 icon: null,
                 callback: idsCallback
             });
         }
         if(isValidPersonData(ids, 'assignee')) {
+            var name = UMTrello.getMembersNameFromID(members, ids.reporter);
             cards.push({
                 title: 'IDS Assignee:',
-                text: 'Assignee: ' + UMTrello.getMembersNameFromID(members, ids.assignee),
+                text: (isDetail) ? name : 'Assignee: ' + name,
                 icon: null,
                 callback: idsCallback
             });
@@ -154,7 +157,7 @@ var getIDSBadges = function(t, members, isDetail) {
         if(ids.hasOwnProperty('what') && ids.what !== undefined && ids.what.trim() !== '') {
             cards.push({
                 title: 'IDS Issue:',
-                text: 'Issue: ' + ids.what,
+                text: (isDetail) ? ids.what : 'Issue: ' + ids.what,
                 icon: null,
                 callback: idsCallback
             });
@@ -211,7 +214,7 @@ TrelloPowerUp.initialize({
     'card-badges': function (t, options) {
         return getMembers(t)
         .then(function(members) {
-            return Promise.all([getCardBadges(t), getIDSBadges(t, members)])
+            return Promise.all([getCardBadges(t), getIDSBadges(t, members, false)])
             .spread(function(dotVotingBadges, idsBadges) {
                 var output = dotVotingBadges.concat(idsBadges);
                 return output;
@@ -225,7 +228,7 @@ TrelloPowerUp.initialize({
     'card-detail-badges': function (t, options) {
         return getMembers(t)
         .then(function(members) {
-            return Promise.all([getCardDetailBadges(t, members), getIDSBadges(t, members)])
+            return Promise.all([getCardDetailBadges(t, members), getIDSBadges(t, members, true)])
             .spread(function (dotVotingBadges, idsBadges) {
                 var output = dotVotingBadges.concat(idsBadges);
                 return output;
