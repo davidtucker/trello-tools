@@ -13,27 +13,18 @@ var isSorting = false;
 var populateListItems = function() {
     return t.lists('name')
     .then(function(lists) {
-        console.dir(lists);
-        var sel = document.getElementById('boardLists');
-        var fragment = document.createDocumentFragment();
-        lists.forEach(function(list) {
-            var opt = document.createElement('option');
-            opt.innerHTML = list.name;
-            opt.value = list.name;
-            fragment.appendChild(opt);
+        UMTrello.populateSelectListBasedOnData('boardLists', lists, function(list) {
+            return {
+                name: list.name,
+                value: list.id
+            };
         });
-        sel.appendChild(fragment);
     });
-};
-
-var getSelectedListName = function() {
-    var select = document.getElementById('boardLists');
-    return select.options[select.selectedIndex].value;
 };
 
 var handleSortClick = function (e) {
     console.log("Sort Click");
-    var selectedListName = getSelectedListName();
+    var selectedListName = UMTrello.selectListSelectedName('boardLists');
     console.log("Selected List Name: " + selectedListName);
     if(isSorting) {
         return;

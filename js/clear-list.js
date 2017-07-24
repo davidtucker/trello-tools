@@ -28,8 +28,8 @@ var getSelectedListId = function() {
 };
 
 var handleClearClick = function (e) {
-    disableClearVotesButton();
-    var listId = getSelectedListId();
+    UMTrello.disableButton('clearVotes');
+    var listId = UMTrello.selectListSelectedValue('boardLists');
     return clearVotesForList(listId)
     .then(function() {
         t.closePopup();
@@ -37,11 +37,6 @@ var handleClearClick = function (e) {
     .catch(function(err) {
         console.log("ERR: " + err);
     });
-};
-
-var disableClearVotesButton = function() {
-    var sel = document.getElementById('clearVotes');
-    sel.setAttribute("disabled", "");
 };
 
 var clearVotesForList = function(listId) {
@@ -58,5 +53,5 @@ var clearVotesForList = function(listId) {
 };
 
 var clearVotesForCard = function (card) {
-    return t.set(card.id, 'shared', 'com.universalmind.trello.DotVotes', 0);
+    return t.set(card.id, 'shared', UMTrello.constants.data.votes, 0);
 };

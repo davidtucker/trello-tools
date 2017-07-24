@@ -1,11 +1,11 @@
 var dotVoteCardButtonCallback = function (t) {
     var oldValue = -1;
     var newValue = -1;
-    return t.get('card','shared', 'com.universalmind.trello.DotVotes', 0)
+    return t.get('card','shared', UMTrello.constants.data.votes, 0)
     .then(function(data) {
         oldValue = data;
         newValue = oldValue + 1;
-        return t.set('card','shared', 'com.universalmind.trello.DotVotes', newValue);
+        return t.set('card','shared', UMTrello.constants.data.votes, newValue);
     });
 };
 
@@ -46,7 +46,7 @@ var getCardDetailBadges = function(t) {
 };
 
 var getCardBadge = function (t, isDetail) {
-    return t.get('card','shared', 'com.universalmind.trello.DotVotes', 0)
+    return t.get('card','shared', UMTrello.constants.data.votes, 0)
     .then(function(dotVotes) {
         var description = dotVotes;
         if(isDetail) {
@@ -61,7 +61,14 @@ var getCardBadge = function (t, isDetail) {
         } else {
             return [];
         }
-    });
+    })
+    .then(function() {
+        // DEBUG
+        return t.board('all')
+        .then(function(board) {
+            console.dir(board);
+        });
+    })
 };
 
 var DOT_ICON = './images/dot.png';
