@@ -14,6 +14,10 @@ var dotVoteCardButtonCallback = function (t) {
         console.log("New Value: " + currentVotes[currentMember.id]);
         console.dir(currentVotes);
         return t.set('card', 'shared', UMTrello.constants.data.votes, currentVotes);
+    })
+    .catch(function(err) {
+        console.log("Voting Error");
+        console.dir(err);
     });
 };
 
