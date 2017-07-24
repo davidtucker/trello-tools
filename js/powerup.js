@@ -83,6 +83,8 @@ var getMemberFirstName = function(id, members) {
         return element.id === id;
     });
     if(member) {
+        console.log("Member");
+        console.dir(member);
         return UMTrello.getMembersFirstName(member);
     }
     console.log("Could not find member and/or name for member");
@@ -140,8 +142,8 @@ var getIDSBadges = function(t, members) {
                 callback: idsCallback
             });
         }
-        console.log("IDS Cards");
-        console.dir(cards);
+        // console.log("IDS Cards");
+        // console.dir(cards);
         return cards;
     })
     .catch(function(err) {
