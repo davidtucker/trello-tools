@@ -126,8 +126,14 @@ var getIDSBadges = function(t, members) {
                 text: 'Issue: ' + ids.what
             });
         }
+        console.log("IDS Cards");
+        consoe.dir(cards);
         return cards;
-    });
+    })
+    .catch(function(err) {
+        console.log("Error creating IDS cards");
+        console.dir(err);
+    })
 };
 
 var DOT_ICON = './images/dot.png';
