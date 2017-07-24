@@ -40,9 +40,6 @@ UMTrello.enableButton = function(buttonId) {
 };
 
 UMTrello.getMembersNameFromID = function(members, id) {
-    console.log("Members");
-    console.dir(members);
-    console.log("ID: " + id);
     var member = members.find(function(item) {
         return item.id === id;
     });

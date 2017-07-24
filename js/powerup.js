@@ -131,13 +131,13 @@ var isValidPersonData = function(ids, value) {
     return true;
 };
 
-var getIDSBadges = function(t, members) {
+var getIDSBadges = function(t, members, isDetail) {
     return t.get('card', 'shared', UMTrello.constants.data.ids, {})
     .then(function(ids) {
         var cards = [];
         if(isValidPersonData(ids, 'reporter')) {
             cards.push({
-                title: 'IDS',
+                title: 'IDS Reporter:',
                 text: 'Reporter: ' + UMTrello.getMembersNameFromID(members, ids.reporter),
                 icon: null,
                 callback: idsCallback
@@ -145,15 +145,15 @@ var getIDSBadges = function(t, members) {
         }
         if(isValidPersonData(ids, 'assignee')) {
             cards.push({
-                title: 'IDS',
-                text: 'Reporter: ' + UMTrello.getMembersNameFromID(members, ids.assignee),
+                title: 'IDS Assignee:',
+                text: 'Assignee: ' + UMTrello.getMembersNameFromID(members, ids.assignee),
                 icon: null,
                 callback: idsCallback
             });
         }
         if(ids.hasOwnProperty('what') && ids.what !== undefined && ids.what.trim() !== '') {
             cards.push({
-                title: 'IDS',
+                title: 'IDS Issue:',
                 text: 'Issue: ' + ids.what,
                 icon: null,
                 callback: idsCallback
@@ -169,6 +169,7 @@ var getIDSBadges = function(t, members) {
 
 var DOT_ICON = './images/dot.png';
 var GREY_DOT_ICON = './images/grey-dot.png';
+var IDS_ICON = './images/ids.png';
 
 var _members;
 var getMembers = function(t) {
@@ -202,7 +203,7 @@ TrelloPowerUp.initialize({
             text: 'Dot Vote',
             callback: dotVoteCardButtonCallback
         }, {
-            icon: GREY_DOT_ICON,
+            icon: IDS_ICON,
             text:  'IDS',
             callback: idsCallback
         }];
@@ -212,7 +213,7 @@ TrelloPowerUp.initialize({
         .then(function(members) {
             return Promise.all([getCardBadges(t), getIDSBadges(t, members)])
             .spread(function(dotVotingBadges, idsBadges) {
-                var output = idsBadges.concat(dotVotingBadges);
+                var output = dotVotingBadges.concat(idsBadges);
                 return output;
             });
         })
@@ -226,7 +227,7 @@ TrelloPowerUp.initialize({
         .then(function(members) {
             return Promise.all([getCardDetailBadges(t, members), getIDSBadges(t, members)])
             .spread(function (dotVotingBadges, idsBadges) {
-                var output = idsBadges.concat(dotVotingBadges);
+                var output = dotVotingBadges.concat(idsBadges);
                 return output;
             });
         })
