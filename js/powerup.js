@@ -93,6 +93,10 @@ var getCardDetailBadges = function(t, members) {
             }
         }
         return cards;
+    })
+    .catch(function(err) {
+       console.log("Error When Creating Details Cards.");
+       console.dir(err);
     });
 };
 
