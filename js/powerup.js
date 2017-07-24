@@ -114,17 +114,20 @@ var getIDSBadges = function(t, members) {
         var cards = [];
         if(ids.reporter !== undefined && ids.reporter !== 0) {
             cards.push({
-                text: 'Reporter: ' + UMTrello.getMembersNameFromID(members, ids.reporter)
+                text: 'Reporter: ' + UMTrello.getMembersNameFromID(members, ids.reporter),
+                icon: GREY_DOT_ICON
             });
         }
         if(ids.assignee !== undefined && ids.assignee !== 0) {
             cards.push({
-                text: 'Reporter: ' + UMTrello.getMembersNameFromID(members, ids.assignee)
+                text: 'Reporter: ' + UMTrello.getMembersNameFromID(members, ids.assignee),
+                icon: GREY_DOT_ICON
             });
         }
         if(ids.what !== undefined && ids.what !== '') {
             cards.push({
-                text: 'Issue: ' + ids.what
+                text: 'Issue: ' + ids.what,
+                icon: GREY_DOT_ICON
             });
         }
         // console.log("IDS Cards");
@@ -180,7 +183,7 @@ TrelloPowerUp.initialize({
     'card-badges': function (t, options) {
         return getMembers(t)
         .then(function(members) {
-            Promise.all([getCardBadges(t), getIDSBadges(t, members)])
+            return Promise.all([getCardBadges(t), getIDSBadges(t, members)])
             .spread(function(dotVotingBadges, idsBadges) {
                 var output = idsBadges.concat(dotVotingBadges);
                 if(output.length === 0) {
