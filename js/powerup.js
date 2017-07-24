@@ -52,11 +52,8 @@ var idsCallback = function (t) {
         height: 200
     })
 };
-var getCardBadges = function(t) {
-    return getCardBadge(t, false);
-};
 
-var getCardBadge = function (t, isDetail) {
+var getCardBadges = function (t) {
     return t.get('card','shared', UMTrello.constants.data.votes, 0)
     .then(function(dotVotes) {
         var votes = 0;
@@ -70,6 +67,10 @@ var getCardBadge = function (t, isDetail) {
             }];
         }
         return [];
+    })
+    .catch(function(err) {
+        console.log("Card Badge Error");
+        console.dir(err);
     });
 };
 
