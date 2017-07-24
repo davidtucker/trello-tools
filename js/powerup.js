@@ -159,6 +159,10 @@ TrelloPowerUp.initialize({
             .then(function(dotVotingBadges, idsBadges) {
                 return idsBadges.concat(dotVotingBadges);
             });
+        })
+        .catch(function(err) {
+            console.log("Error on Card Badges");
+            console.dir(err);
         });
     },
     'card-detail-badges': function (t, options) {
@@ -168,6 +172,10 @@ TrelloPowerUp.initialize({
             .then(function(dotVotingBadges, idsBadges) {
                 return idsBadges.concat(dotVotingBadges);
             });
+        })
+        .catch(function(err) {
+            console.log("Error on Card Detail Badges");
+            console.dir(err);
         });
     }
 });
