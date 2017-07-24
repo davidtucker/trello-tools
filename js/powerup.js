@@ -127,7 +127,7 @@ var getIDSBadges = function(t, members) {
             });
         }
         console.log("IDS Cards");
-        consoe.dir(cards);
+        console.dir(cards);
         return cards;
     })
     .catch(function(err) {
