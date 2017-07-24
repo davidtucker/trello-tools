@@ -6,7 +6,7 @@ var dotVoteCardButtonCallback = function (t) {
         return t.get('card', 'shared', UMTrello.constants.data.votes, {});
     })
     .then(function(currentVotes) {
-        if(currentVotes[currentMember.id] === undefined) {
+        if(!currentVotes.hasOwnProperty(currentMember.id)) {
             currentVotes[currentMember.id] = 0;
         }
         console.log("Old Value: " + currentVotes[currentMember.id]);
