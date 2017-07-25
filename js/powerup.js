@@ -47,7 +47,7 @@ var clearIDSPopup = function (t) {
 
 var boardButtonCallback = function (t) {
     return t.popup({
-        title: 'Dot Voting Actions',
+        title: 'UM Tools Actions',
         items: [
             {
                 text: 'Clear Votes on a List',
