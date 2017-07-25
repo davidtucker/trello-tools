@@ -17,7 +17,7 @@ var populateListItems = function() {
     });
 };
 
-var handleClearClick = function (e) {
+var handleClearVotesClick = function (e) {
     UMTrello.disableButton('clearVotes');
     var listId = UMTrello.selectListSelectedValue('boardLists');
     return clearVotesForList(listId)
@@ -29,19 +29,43 @@ var handleClearClick = function (e) {
     });
 };
 
-var clearVotesForList = function(listId) {
+var handleClearIDSClick = function (e) {
+    UMTrello.disableButton('clearIDS');
+    var listId = UMTrello.selectListSelectedValue('boardLists');
+    return clearIDSForList(listId)
+    .then(function() {
+        t.closePopup();
+    })
+    .catch(function(err) {
+        console.log("ERR: " + err);
+    });
+};
+
+var clearDataForList = function (listId, removeFn) {
     return t.cards('id', 'idList', 'name')
     .then(function(cards) {
         var promises = [];
         cards.forEach(function(card) {
             if(listId === 0 || listId === '0' || card.idList === listId) {
-                promises.push(clearVotesForCard(card));
+                promises.push(removeFn(card));
             }
         });
         return Promise.all(promises);
     });
 };
 
+var clearIDSForCard = function (card) {
+    return t.remove(card.id, 'shared', UMTrello.constants.data.ids);
+};
+
+var clearIDSForList = function(listId) {
+    return clearDataForList(listId, clearIDSForCard);
+};
+
 var clearVotesForCard = function (card) {
     return t.remove(card.id, 'shared', UMTrello.constants.data.votes);
+};
+
+var clearVotesForList = function(listId) {
+    return clearDataForList(listId, clearVotesForCard);
 };

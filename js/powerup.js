@@ -32,7 +32,15 @@ var sortCardsInListPopup = function (t) {
 var clearListVotesPopup = function (t) {
     return t.popup({
         title: 'Select List to Clear Votes',
-        url: './clear-list.html',
+        url: './clear-votes.html',
+        height: 200
+    })
+};
+
+var clearIDSPopup = function (t) {
+    return t.popup({
+        title: 'Select List to Clear IDS Data',
+        url: './clear-ids.html',
         height: 200
     })
 };
@@ -44,6 +52,10 @@ var boardButtonCallback = function (t) {
             {
                 text: 'Clear Votes on a List',
                 callback: clearListVotesPopup
+            },
+            {
+                text: 'Clear IDS Info on a List',
+                callback: clearIDSPopup
             }
         ]
     });
@@ -196,7 +208,7 @@ TrelloPowerUp.initialize({
     'board-buttons': function (t, options) {
         return [{
             icon: DOT_ICON,
-            text: 'Dot Voting Actions',
+            text: 'UM Tools',
             callback: boardButtonCallback
         }];
     },
