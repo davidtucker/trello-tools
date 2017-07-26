@@ -33,6 +33,7 @@ var populateForm = function() {
 
 var updateFormState = function(data) {
     document.getElementById('idsWhat').value = data.what ? data.what : '';
+    document.getElementById('idsSolution').value = data.solution ? data.solution : '';
     document.getElementById('idsReporter').value = data.reporter ? data.reporter : 0;
     document.getElementById('idsAssignee').value = data.assignee ? data.assignee : 0;
 };
@@ -43,7 +44,8 @@ var handleIDSSave = function (e) {
     var data = {
         reporter: UMTrello.selectListSelectedValue('idsReporter'),
         assignee: UMTrello.selectListSelectedValue('idsAssignee'),
-        what: document.getElementById('idsWhat').value.trim()
+        what: document.getElementById('idsWhat').value.trim(),
+        solution: document.getElementById('idsSolution').value.trim
     };
     return t.set('card', 'shared', UMTrello.constants.data.ids, data)
     .then(function() {

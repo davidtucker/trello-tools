@@ -174,6 +174,14 @@ var getIDSBadges = function(t, members, isDetail) {
                 callback: idsCallback
             });
         }
+        if(ids.hasOwnProperty('solution') && ids.solution !== undefined && ids.solution.trim() !== '') {
+            cards.push({
+                title: 'IDS Solution:',
+                text: (isDetail) ? ids.solution : 'Solution: ' + ids.solution,
+                icon: null,
+                callback: idsCallback
+            });
+        }
         return cards;
     })
     .catch(function(err) {
