@@ -45,7 +45,7 @@ var handleIDSSave = function (e) {
         reporter: UMTrello.selectListSelectedValue('idsReporter'),
         assignee: UMTrello.selectListSelectedValue('idsAssignee'),
         what: document.getElementById('idsWhat').value.trim(),
-        solution: document.getElementById('idsSolution').value.trim
+        solution: document.getElementById('idsSolution').value.trim()
     };
     return t.set('card', 'shared', UMTrello.constants.data.ids, data)
     .then(function() {
