@@ -1,1 +1,1 @@
-# Universal Mind Trello Tools
+# EOS Trello Tools
