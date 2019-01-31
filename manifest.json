@@ -1,11 +1,11 @@
 {
-  "name": "Universal Mind Tools",
+  "name": "EOS Tools",
   "description": "",
-  "details": "A set of tools used by the team at Universal Mind to augment the usefulness of Trello.",
+  "details": "A set of tools used during an EOS Level 10 Meeting",
   "icon": {
     "url": "./images/logo.png"
   },
-  "author": "Universal Mind",
+  "author": "Mind Mill Consulting",
   "capabilities": [
     "board-buttons",
     "callback",
