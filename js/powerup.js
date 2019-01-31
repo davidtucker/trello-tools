@@ -47,7 +47,7 @@ var clearIDSPopup = function (t) {
 
 var boardButtonCallback = function (t) {
     return t.popup({
-        title: 'UM Tools Actions',
+        title: 'EOS Tools Actions',
         items: [
             {
                 text: 'Clear Votes on a List',
@@ -216,7 +216,7 @@ TrelloPowerUp.initialize({
     'board-buttons': function (t, options) {
         return [{
             icon: DOT_ICON,
-            text: 'UM Tools',
+            text: 'EOS Tools',
             callback: boardButtonCallback
         }];
     },
