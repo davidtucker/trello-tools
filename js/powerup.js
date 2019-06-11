@@ -158,7 +158,7 @@ var getIDSBadges = function(t, members, isDetail) {
             });
         }
         if(isValidPersonData(ids, 'assignee')) {
-            var name = UMTrello.getMembersNameFromID(members, ids.reporter);
+            var name = UMTrello.getMembersNameFromID(members, ids.assignee);
             cards.push({
                 title: 'IDS Assignee:',
                 text: (isDetail) ? name : 'Assignee: ' + name,
